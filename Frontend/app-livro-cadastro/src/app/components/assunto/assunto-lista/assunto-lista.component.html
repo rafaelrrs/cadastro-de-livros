@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <h2>Lista de Assuntos</h2>
+  
+    <div class="d-flex justify-content-between mb-3">
+      <button class="btn btn-primary" (click)="novoAssunto()">Novo Assunto</button>
+    </div>
+  
+    <div *ngIf="loading" class="text-center">Carregando assuntos...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+    <table *ngIf="!loading && !error && assuntos.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descrição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let assunto of assuntos">
+          <td>{{ assunto.codAs }}</td>
+          <td>{{ assunto.descricao }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm mr-2" (click)="editarAssunto(assunto.codAs)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="excluirAssunto(assunto.codAs)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!loading && !error && assuntos.length === 0" class="alert alert-info">
+      Nenhum assunto cadastrado.
+    </div>
+  </div>

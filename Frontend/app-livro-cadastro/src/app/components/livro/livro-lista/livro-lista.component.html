@@ -1,0 +1,39 @@
+<div class="container">
+    <h2 class="mt-4">Lista de Livros</h2>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Editora</th>
+          <th>Ano de Publicação</th>
+          <th>Autores</th>
+          <th>Assuntos</th>
+          <th>Preços</th> <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let livro of livros">
+          <td>{{ livro.titulo }}</td>
+          <td>{{ livro.editora }}</td>
+          <td>{{ livro.anoPublicacao }}</td>
+          <td>{{ livro.autorIds ? livro.autorIds.join(', ') : 'N/A' }}</td>
+          <td>{{ livro.assuntoIds ? livro.assuntoIds.join(', ') : 'N/A' }}</td>
+          <td>
+              <ng-container *ngIf="livro.precosFormaCompra && livro.precosFormaCompra.length > 0; else noPrecos">
+                <div *ngFor="let preco of livro.precosFormaCompra">
+                  {{ preco.formaCompraId }}: {{ preco.preco | currency:'BRL' }}
+                </div>
+              </ng-container>
+              <ng-template #noPrecos>N/A</ng-template>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editarLivro(livro.codl)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="excluirLivro(livro.codl)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a class="btn btn-success" routerLink="/livros/novo">Novo Livro</a>
+  </div>
+  

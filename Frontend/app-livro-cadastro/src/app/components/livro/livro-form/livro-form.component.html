@@ -1,0 +1,89 @@
+<div class="container">
+    <h2 class="mt-4">{{ isEditing ? 'Editar Livro' : 'Cadastrar Livro' }}</h2>
+  
+    <form [formGroup]="livroForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" formControlName="titulo" class="form-control" />
+        <div *ngIf="livroForm.get('titulo')?.invalid && (livroForm.get('titulo')?.dirty || livroForm.get('titulo')?.touched)" class="alert alert-danger">
+          Título é obrigatório.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="editora">Editora:</label>
+        <input type="text" id="editora" formControlName="editora" class="form-control" />
+        <div *ngIf="livroForm.get('editora')?.invalid && (livroForm.get('editora')?.dirty || livroForm.get('editora')?.touched)" class="alert alert-danger">
+          Editora é obrigatória.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="anoPublicacao">Ano de Publicação:</label>
+        <input type="text" id="anoPublicacao" formControlName="anoPublicacao" class="form-control" />
+        <div *ngIf="livroForm.get('anoPublicacao')?.invalid && (livroForm.get('anoPublicacao')?.dirty || livroForm.get('anoPublicacao')?.touched)" class="alert alert-danger">
+          Ano de Publicação é obrigatório.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="autores">Autores:</label>
+        <select multiple id="autores" formControlName="autorIds" class="form-control">
+          <option *ngFor="let autor of autores" [value]="autor.codAu">
+            {{ autor.nome }}
+          </option>
+        </select>
+         <div *ngIf="livroForm.get('autorIds')?.invalid && (livroForm.get('autorIds')?.dirty || livroForm.get('autorIds')?.touched)" class="alert alert-danger">
+          Autores são obrigatórios.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="assuntos">Assuntos:</label>
+        <select multiple id="assuntos" formControlName="assuntoIds" class="form-control">
+          <option *ngFor="let assunto of assuntos" [value]="assunto.codAs">
+            {{ assunto.descricao }}
+          </option>
+        </select>
+        <div *ngIf="livroForm.get('assuntoIds')?.invalid && (livroForm.get('assuntoIds')?.dirty || livroForm.get('assuntoIds')?.touched)" class="alert alert-danger">
+          Assuntos são obrigatórios.
+        </div>
+      </div>
+  
+      <div formArrayName="precosFormaCompra">
+        <div *ngFor="let precoFormGroup of getPrecosFormaCompraFormArray().controls; let i = index;" [formGroupName]="i" class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Preço da Forma de Compra {{ i + 1 }}</h5>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="formaCompra{{i}}">Forma de Compra:</label>
+                <select id="formaCompra{{i}}" formControlName="formaCompraId" class="form-control">
+                  <option *ngFor="let formaCompra of formasCompra" [value]="formaCompra.codFc">
+                    {{ formaCompra.descricao }}
+                  </option>
+                </select>
+                 <div *ngIf="precoFormGroup.get('formaCompraId')?.invalid && (precoFormGroup.get('formaCompraId')?.dirty || precoFormGroup.get('formaCompraId')?.touched)" class="alert alert-danger">
+                  Forma de Compra é obrigatória.
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="preco{{i}}">Preço:</label>
+                <input type="number" id="preco{{i}}" formControlName="preco" class="form-control" />
+                <div *ngIf="precoFormGroup.get('preco')?.invalid && (precoFormGroup.get('preco')?.dirty || precoFormGroup.get('preco')?.touched)" class="alert alert-danger">
+                  Preço é obrigatório.
+                </div>
+              </div>
+              <div class="col-12">
+                  <button type="button" class="btn btn-danger" (click)="removerPrecoFormaCompra(i)">Remover</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="adicionarPrecoFormaCompra()">Adicionar Forma de Compra</button>
+      </div>
+  
+      <button type="submit" class="btn btn-success mt-3" [disabled]="livroForm.invalid">Salvar</button>
+      <button type="button" class="btn btn-secondary mt-3" (click)="onCancel()">Cancelar</button>
+    </form>
+  </div>
+  

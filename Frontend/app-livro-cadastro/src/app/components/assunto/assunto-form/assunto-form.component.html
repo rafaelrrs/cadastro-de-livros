@@ -1,0 +1,21 @@
+<div class="container mt-4">
+    <h2>{{ tituloPagina }}</h2>
+  
+    <form [formGroup]="assuntoForm" (ngSubmit)="salvarAssunto()">
+      <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" class="form-control" formControlName="descricao">
+        <div *ngIf="assuntoForm.get('descricao')?.invalid && (assuntoForm.get('descricao')?.dirty || assuntoForm.get('descricao')?.touched)" class="text-danger">
+          Descrição é obrigatória.
+        </div>
+      </div>
+  
+      <div class="mt-3">
+        <button type="submit" class="btn btn-success mr-2" [disabled]="assuntoForm.invalid">Salvar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  
+    <div *ngIf="loading" class="text-center mt-3">Salvando assunto...</div>
+    <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+  </div>

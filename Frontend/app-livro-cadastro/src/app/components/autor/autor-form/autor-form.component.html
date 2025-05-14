@@ -1,0 +1,60 @@
+<div class="container">
+    <h2 class="mt-4">Cadastro de Autor</h2>
+  
+    <form (ngSubmit)="onSubmit()" #autorForm="ngForm">
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          class="form-control"
+          [(ngModel)]="autor.nome"
+          required
+          #nomeInput="ngModel"
+        />
+        <div *ngIf="nomeInput.invalid && (nomeInput.dirty || nomeInput.touched)" class="alert alert-danger">
+          Nome é obrigatório.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input
+          type="date"
+          id="dataNascimento"
+          name="dataNascimento"
+          class="form-control"
+          [(ngModel)]="autor.dataNascimento"
+          required
+          #dataNascimentoInput="ngModel"
+          [ngModelOptions]="{standalone: true}"
+        />
+         <div *ngIf="dataNascimentoInput.invalid && (dataNascimentoInput.dirty || dataNascimentoInput.touched)" class="alert alert-danger">
+          Data de Nascimento é obrigatória.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          [(ngModel)]="autor.email"
+          required
+          email
+          #emailInput="ngModel"
+        />
+        <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="alert alert-danger">
+          <div *ngIf="emailInput.errors?.['required']">Email é obrigatório.</div>
+          <div *ngIf="emailInput.errors?.['email']">Email deve ser um endereço de email válido.</div>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="autorForm.invalid">Salvar</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+    </form>
+  </div>
+  

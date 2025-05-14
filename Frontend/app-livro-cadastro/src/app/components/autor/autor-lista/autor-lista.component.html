@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <h2>Lista de Autores</h2>
+     <div class="d-flex justify-content-between mb-3">
+      <button class="btn btn-primary" (click)="novoAutor()">Novo Autor</button>
+    </div>
+  
+    <div *ngIf="loading" class="text-center">Carregando autores...</div>
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  
+    <table *ngIf="!loading && !error && autores.length > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let autor of autores">
+          <td>{{ autor.codAu }}</td>
+          <td>{{ autor.nome }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm mr-2" (click)="editarAutor(autor.codAu)">Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="excluirAutor(autor.codAu)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="!loading && !error && autores.length === 0" class="alert alert-info">
+      Nenhum autor cadastrado.
+    </div>
+  </div>
